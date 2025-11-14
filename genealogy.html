@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree Builder - UAPR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'terracotta': '#B85450',
+                        'ochre': '#CC8B3C',
+                        'forest': '#2D5016',
+                        'cream': '#F5F1E8',
+                        'gold': '#D4AF37',
+                        'charcoal': '#2C2C2C'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif'],
+                        'accent': ['Crimson Text', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .genealogy-bg {
+            background: linear-gradient(135deg, rgba(204, 139, 60, 0.9), rgba(45, 80, 22, 0.8)), 
+                        url('resources/ancestry-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .scroll-reveal.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .family-tree-container {
+            height: 600px;
+            background: #F5F1E8;
+            border-radius: 12px;
+            border: 2px solid #CC8B3C;
+        }
+        
+        .member-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .tree-controls {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid #CC8B3C;
+        }
+    </style>
+</head>
+<body class="font-body bg-cream text-charcoal">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-display font-bold text-terracotta">UAPR</h1>
+                    <span class="ml-2 text-sm text-gray-600 hidden sm:block">Urhobo Heritage Platform</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-charcoal hover:text-terracotta transition-colors">Home</a>
+                    <a href="heritage.html" class="text-charcoal hover:text-terracotta transition-colors">Heritage</a>
+                    <a href="genealogy.html" class="text-terracotta font-medium border-b-2 border-terracotta pb-1">Genealogy</a>
+                    <a href="directory.html" class="text-charcoal hover:text-terracotta transition-colors">Directory</a>
+                </div>
+                <button class="bg-terracotta text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition-colors">
+                    Join Community
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="genealogy-bg min-h-[60vh] flex items-center justify-center relative pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-5xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+                Family <span class="text-gold">Tree Builder</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-cream mb-8 max-w-3xl mx-auto leading-relaxed">
+                Document your ancestral lineage, connect with relatives, and preserve your family's 
+                heritage for future generations.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tree Builder Interface -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Tree Controls -->
+                <div class="lg:col-span-1">
+                    <div class="tree-controls p-6 sticky top-24">
+                        <h3 class="text-xl font-bold text-charcoal mb-6">Tree Controls</h3>
+                        
+                        <div class="space-y-4 mb-8">
+                            <button id="add-member-btn" class="w-full bg-terracotta text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition-colors font-semibold">
+                                Add Family Member
+                            </button>
+                            <button class="w-full bg-ochre text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition-colors font-semibold">
+                                Import Family Data
+                            </button>
+                            <button class="w-full bg-forest text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition-colors font-semibold">
+                                Export Tree
+                            </button>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-6">
+                            <h4 class="font-semibold text-charcoal mb-4">Tree Statistics</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Total Members:</span>
+                                    <span class="font-bold text-terracotta">24</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Generations:</span>
+                                    <span class="font-bold text-ochre">4</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Living Members:</span>
+                                    <span class="font-bold text-forest">18</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Countries:</span>
+                                    <span class="font-bold text-gold">3</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-6 mt-6">
+                            <h4 class="font-semibold text-charcoal mb-4">Quick Actions</h4>
+                            <div class="space-y-2">
+                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors">
+                                    Search Members
+                                </button>
+                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors">
+                                    View Relationships
+                                </button>
+                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors">
+                                    Generate Report
+                                </button>
+                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors">
+                                    Invite Relatives
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Family Tree Visualization -->
+                <div class="lg:col-span-3">
+                    <div class="scroll-reveal">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-charcoal">Your Family Tree</h2>
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors">
+                                    Zoom In
+                                </button>
+                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors">
+                                    Zoom Out
+                                </button>
+                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors">
+                                    Reset View
+                                </button>
+                            </div>
+                        </div>
+                        <div id="family-tree" class="family-tree-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Members Gallery -->
+    <section class="py-20 bg-gradient-to-br from-cream to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
+                    Family <span class="text-terracotta">Members</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Browse and manage detailed profiles of your family members, including photos, 
+                    life events, and relationship connections.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-terracotta to-ochre"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                EO
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Ese Ovie</h3>
+                                <p class="text-sm text-gray-600">Great Grandfather</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1892</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Farmer</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-terracotta hover:text-ochre transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-ochre to-gold"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-ochre rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                AO
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Amina Ovie</h3>
+                                <p class="text-sm text-gray-600">Great Grandmother</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1895</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Trader</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-ochre hover:text-gold transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-forest to-terracotta"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-forest rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                IO
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Igho Ovie</h3>
+                                <p class="text-sm text-gray-600">Grandfather</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1920</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Teacher</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-forest hover:text-terracotta transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-gold to-ochre"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                MO
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Maria Ovie</h3>
+                                <p class="text-sm text-gray-600">Grandmother</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1925</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Midwife</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-gold hover:text-ochre transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-terracotta to-gold"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                SO
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Sonia Ovie</h3>
+                                <p class="text-sm text-gray-600">Mother</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1955</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Business Owner</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-terracotta hover:text-gold transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-forest to-ochre"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-forest rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                JA
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">John Abu</h3>
+                                <p class="text-sm text-gray-600">Father</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1950</p>
+                            <p><span class="font-medium">Kingdom:</span> Sapele</p>
+                            <p><span class="font-medium">Occupation:</span> Engineer</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-forest hover:text-ochre transition-colors text-sm font-medium">
+                                View Details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-gold to-terracotta"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                SA
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Sonia Abu</h3>
+                                <p class="text-sm text-gray-600">You</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p><span class="font-medium">Born:</span> 1985</p>
+                            <p><span class="font-medium">Kingdom:</span> Okpe</p>
+                            <p><span class="font-medium">Occupation:</span> Project Manager</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-gold hover:text-terracotta transition-colors text-sm font-medium">
+                                Edit Profile →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white rounded-2xl shadow-lg overflow-hidden scroll-reveal">
+                    <div class="h-32 bg-gradient-to-br from-ochre to-forest"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-16 h-16 bg-ochre rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                +A
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="font-bold text-charcoal">Add Member</h3>
+                                <p class="text-sm text-gray-600">Click to add new</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p>Add a new family member to your tree</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <button class="text-ochre hover:text-forest transition-colors text-sm font-medium">
+                                Add Member →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Insights -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
+                    Family <span class="text-terracotta">Insights</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Discover patterns, connections, and interesting facts about your family's heritage 
+                    and demographic distribution.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="scroll-reveal">
+                    <div class="bg-gradient-to-br from-terracotta/10 to-ochre/10 p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold text-charcoal mb-6">Generational Distribution</h3>
+                        <div id="generational-chart" style="height: 300px;"></div>
+                    </div>
+                </div>
+                
+                <div class="scroll-reveal">
+                    <div class="bg-gradient-to-br from-forest/10 to-gold/10 p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold text-charcoal mb-6">Geographic Distribution</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span>Nigeria</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-3 mr-3">
+                                        <div class="bg-terracotta h-3 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                    <span class="font-bold">75%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>United States</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-3 mr-3">
+                                        <div class="bg-ochre h-3 rounded-full" style="width: 15%"></div>
+                                    </div>
+                                    <span class="font-bold">15%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>United Kingdom</span>
+                                <div class="flex items-center">
+                                    <div class="w-32 bg-gray-200 rounded-full h-3 mr-3">
+                                        <div class="bg-forest h-3 rounded-full" style="width: 10%"></div>
+                                    </div>
+                                    <span class="font-bold">10%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-semibold text-charcoal mb-4">Occupational Diversity</h4>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-terracotta rounded-full mr-2"></div>
+                                    <span>Education (25%)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-ochre rounded-full mr-2"></div>
+                                    <span>Healthcare (20%)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-forest rounded-full mr-2"></div>
+                                    <span>Engineering (15%)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-gold rounded-full mr-2"></div>
+                                    <span>Business (40%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-br from-terracotta to-ochre text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+                    Expand Your <span class="text-gold">Family Tree</span>
+                </h2>
+                <p class="text-xl text-cream mb-12 max-w-2xl mx-auto">
+                    Invite relatives to contribute to your family tree and discover connections 
+                    you never knew existed within the Urhobo community.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button class="bg-gold text-charcoal px-10 py-4 rounded-md font-semibold text-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg">
+                        Invite Family Members
+                    </button>
+                    <button class="border-2 border-white text-white px-10 py-4 rounded-md font-semibold text-lg hover:bg-white hover:text-charcoal transition-all transform hover:scale-105">
+                        Discover Connections
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-cream py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-display font-bold text-gold mb-4">UAPR</h3>
+                <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                    Preserving Urhobo heritage, connecting communities, and celebrating our shared cultural identity 
+                    through digital innovation and ancestral reverence.
+                </p>
+                <div class="border-t border-gray-700 pt-6">
+                    <p class="text-gray-500">
+                        © 2024 Urhobo Ancestral & Professional Register. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize generational chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartContainer = document.getElementById('generational-chart');
+            if (chartContainer) {
+                const chart = echarts.init(chartContainer);
+                const option = {
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: '70%',
+                            data: [
+                                { value: 2, name: 'Great Grandparents', itemStyle: { color: '#B85450' } },
+                                { value: 4, name: 'Grandparents', itemStyle: { color: '#CC8B3C' } },
+                                { value: 6, name: 'Parents Generation', itemStyle: { color: '#2D5016' } },
+                                { value: 12, name: 'Current Generation', itemStyle: { color: '#D4AF37' } }
+                            ],
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            },
+                            label: {
+                                fontSize: 12,
+                                color: '#2C2C2C'
+                            }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
