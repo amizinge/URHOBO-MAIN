@@ -1,0 +1,45 @@
+<div id="auth-modal" class="fixed inset-0 bg-ink/70 backdrop-blur-sm z-[100] hidden">
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-10 relative">
+            <button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-ink transition" data-auth-close>&times;</button>
+            <div class="text-center mb-8">
+                <p class="uppercase tracking-[0.4em] text-xs text-gray-500">Secure Access</p>
+                <h2 class="text-3xl font-display font-semibold text-ink">Lumina Portal</h2>
+                <p class="text-gray-500 mt-3">Log in to continue your lineage work or create a new steward account.</p>
+            </div>
+            <div class="flex bg-mist rounded-full p-1 mb-6">
+                <button type="button" class="flex-1 py-2 rounded-full text-sm font-semibold transition" data-auth-tab="login">Login</button>
+                <button type="button" class="flex-1 py-2 rounded-full text-sm font-semibold transition" data-auth-tab="signup">Sign Up</button>
+            </div>
+            <div id="auth-forms">
+                <form id="login-form" class="space-y-4" autocomplete="off">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                        <input type="email" name="email" required class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pulse" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                        <input type="password" name="password" required class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pulse" placeholder="••••••">
+                    </div>
+                    <button type="submit" class="w-full bg-pulse text-white py-3 rounded-xl font-semibold shadow-lg shadow-pulse/30 hover:bg-purple-700 transition">Access Portal</button>
+                </form>
+                <form id="signup-form" class="space-y-4 hidden" autocomplete="off">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
+                        <input type="text" name="name" required class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pulse" placeholder="Adaeze Lumina">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                        <input type="email" name="email" required class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pulse" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                        <input type="password" name="password" minlength="6" required class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pulse" placeholder="At least 6 characters">
+                    </div>
+                    <button type="submit" class="w-full bg-aura text-white py-3 rounded-xl font-semibold shadow-lg shadow-aura/30 hover:bg-sky-500 transition">Create Steward Account</button>
+                </form>
+            </div>
+            <div id="auth-feedback" class="mt-6 text-center text-sm font-medium"></div>
+        </div>
+    </div>
+</div>

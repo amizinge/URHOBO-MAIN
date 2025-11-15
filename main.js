@@ -1,6 +1,8 @@
 // ULN Website Main JavaScript
 // Lumina Network Platform with Interactive Components
 
+const API_BASE_URL = window.ULN_API_BASE || 'http://127.0.0.1:5000';
+
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
@@ -10,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFamilyTree();
     initializeCulturalExplorer();
     initializeProfessionalDirectory();
+    initializeAuthPortal();
 });
 
 // Animation Initialization
@@ -551,4 +554,149 @@ const counterObserver = new IntersectionObserver((entries) => {
 const statsSection = document.querySelector('.stats-section');
 if (statsSection) {
     counterObserver.observe(statsSection);
+}
+
+// Authentication Modal + API Integration
+function initializeAuthPortal() {
+    if (window.__ULNAuthInitialized) return;
+    const authRoot = document.getElementById('auth-root');
+    if (!authRoot) return;
+
+    fetch('auth-modal.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Unable to load authentication modal.');
+            }
+            return response.text();
+        })
+        .then(html => {
+            authRoot.innerHTML = html;
+            registerAuthHandlers();
+            window.__ULNAuthInitialized = true;
+        })
+        .catch(error => {
+            console.error('Auth modal failed to load', error);
+        });
+}
+
+function registerAuthHandlers() {
+    const modal = document.getElementById('auth-modal');
+    if (!modal) return;
+
+    const loginForm = modal.querySelector('#login-form');
+    const signupForm = modal.querySelector('#signup-form');
+    const feedbackEl = modal.querySelector('#auth-feedback');
+    const tabButtons = modal.querySelectorAll('[data-auth-tab]');
+    const closeButtons = modal.querySelectorAll('[data-auth-close]');
+
+    const updateFeedback = (message = '', type = 'info') => {
+        const baseClass = 'mt-6 text-center text-sm font-semibold';
+        const colorClass = type === 'error' ? 'text-red-500' : 'text-grove';
+        feedbackEl.className = `${baseClass} ${colorClass}`;
+        feedbackEl.textContent = message;
+    };
+
+    const setActiveTab = (mode) => {
+        if (mode === 'signup') {
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        } else {
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+        }
+
+        tabButtons.forEach(button => {
+            if (button.dataset.authTab === mode) {
+                button.classList.add('bg-white', 'text-ink', 'shadow');
+                button.classList.remove('text-gray-500');
+            } else {
+                button.classList.remove('bg-white', 'text-ink', 'shadow');
+                button.classList.add('text-gray-500');
+            }
+        });
+
+        updateFeedback('');
+    };
+
+    const showModal = (mode = 'login') => {
+        setActiveTab(mode);
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    };
+
+    const hideModal = () => {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    document.querySelectorAll('.open-auth-modal').forEach(trigger => {
+        trigger.addEventListener('click', (event) => {
+            event.preventDefault();
+            const mode = trigger.dataset.authMode || 'login';
+            showModal(mode);
+        });
+    });
+
+    tabButtons.forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.authTab)));
+    closeButtons.forEach(button => button.addEventListener('click', hideModal));
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            hideModal();
+        }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+            hideModal();
+        }
+    });
+
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(loginForm);
+        handleAuthRequest('login', formData, updateFeedback, hideModal);
+    });
+
+    signupForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(signupForm);
+        handleAuthRequest('signup', formData, updateFeedback, hideModal);
+    });
+
+    setActiveTab('login');
+}
+
+async function handleAuthRequest(mode, formData, setFeedback, closeModal) {
+    const endpoint = mode === 'signup' ? '/api/signup' : '/api/login';
+    const payload = {};
+    formData.forEach((value, key) => {
+        payload[key] = typeof value === 'string' ? value.trim() : value;
+    });
+
+    try {
+        setFeedback('Processing request...', 'info');
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (!response.ok || data.status !== 'success') {
+            throw new Error(data.message || 'Unable to complete request.');
+        }
+
+        if (data.token) {
+            localStorage.setItem('uln_token', data.token);
+        }
+        if (data.user) {
+            localStorage.setItem('uln_user', JSON.stringify(data.user));
+        }
+
+        setFeedback(data.message || 'Success! Redirecting...', 'success');
+        setTimeout(() => {
+            closeModal();
+        }, 1500);
+    } catch (error) {
+        setFeedback(error.message || 'Authentication failed. Please try again.', 'error');
+    }
 }

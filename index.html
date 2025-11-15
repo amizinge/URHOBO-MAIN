@@ -121,7 +121,7 @@
                     <a href="directory.html" class="text-ink/80 hover:text-pulse transition-colors">Directory</a>
                     <a href="dashboard.html" class="text-ink/80 hover:text-pulse transition-colors">Insights</a>
                 </div>
-                <button class="bg-pulse text-white px-6 py-2 rounded-full shadow-lg shadow-pulse/30 hover:bg-purple-700 transition-colors">
+                <button type="button" class="open-auth-modal bg-pulse text-white px-6 py-2 rounded-full shadow-lg shadow-pulse/30 hover:bg-purple-700 transition-colors" data-auth-mode="login">
                     Launch Portal
                 </button>
             </div>
@@ -382,6 +382,7 @@
         </div>
     </footer>
 
+    <div id="auth-root"></div>
     <script src="main.js"></script>
 </body>
 </html>
