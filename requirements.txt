@@ -1,2 +1,4 @@
 Flask==3.1.2
 Flask-Cors==6.0.1
+pymongo==4.11.1
+vercel-wsgi==0.9.1
