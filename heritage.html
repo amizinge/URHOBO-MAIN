@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cultural Heritage - UAPR</title>
+    <title>ULN Stories - Cultural Heritage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
@@ -12,24 +12,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'terracotta': '#B85450',
-                        'ochre': '#CC8B3C',
-                        'forest': '#2D5016',
-                        'cream': '#F5F1E8',
-                        'gold': '#D4AF37',
-                        'charcoal': '#2C2C2C'
+                        'pulse': '#7C3AED',
+                        'aura': '#0EA5E9',
+                        'grove': '#0F766E',
+                        'mist': '#F6F4FF',
+                        'radiance': '#FCD34D',
+                        'ink': '#050B1A'
                     },
                     fontFamily: {
-                        'display': ['Playfair Display', 'serif'],
-                        'body': ['Inter', 'sans-serif'],
-                        'accent': ['Crimson Text', 'serif']
+                        'display': ['Fraunces', 'serif'],
+                        'body': ['Space Grotesk', 'sans-serif'],
+                        'accent': ['Spectral', 'serif']
                     }
                 }
             }
@@ -38,7 +38,7 @@
     
     <style>
         .heritage-bg {
-            background: linear-gradient(135deg, rgba(45, 80, 22, 0.9), rgba(184, 84, 80, 0.8)), 
+            background: linear-gradient(135deg, rgba(5, 11, 26, 0.92), rgba(124, 58, 237, 0.85)), 
                         url('resources/heritage-1.jpg');
             background-size: cover;
             background-position: center;
@@ -69,12 +69,12 @@
         .timeline-marker {
             width: 12px;
             height: 12px;
-            background: #B85450;
+            background: #7C3AED;
             border-radius: 50%;
             position: absolute;
             left: -6px;
             top: 8px;
-            border: 3px solid #F5F1E8;
+            border: 3px solid #F6F4FF;
         }
         
         .timeline-item::before {
@@ -84,7 +84,7 @@
             top: 20px;
             width: 2px;
             height: calc(100% - 20px);
-            background: #CC8B3C;
+            background: rgba(14, 165, 233, 0.7);
         }
         
         .timeline-item:last-child::before {
@@ -92,8 +92,9 @@
         }
         
         .heritage-filter.active {
-            background: #B85450;
-            color: white;
+            background: #7C3AED;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.35);
         }
         
         .heritage-content-item {
@@ -102,29 +103,32 @@
         
         .cultural-map {
             height: 400px;
-            background: #F5F1E8;
+            background: #F6F4FF;
             border-radius: 12px;
-            border: 2px solid #CC8B3C;
+            border: 2px solid rgba(14, 165, 233, 0.4);
         }
     </style>
 </head>
-<body class="font-body bg-cream text-charcoal">
+<body class="font-body bg-mist text-ink">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+    <nav class="fixed top-0 w-full bg-mist/95 backdrop-blur-xl shadow-sm z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-display font-bold text-terracotta">UAPR</h1>
-                    <span class="ml-2 text-sm text-gray-600 hidden sm:block">Urhobo Heritage Platform</span>
+                    <h1 class="text-2xl font-display font-bold text-pulse tracking-wide">ULN</h1>
+                    <span class="ml-2 text-xs sm:text-sm text-gray-500 hidden sm:block uppercase tracking-[0.2em]">
+                        Urhobo Lumina Network
+                    </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-charcoal hover:text-terracotta transition-colors">Home</a>
-                    <a href="heritage.html" class="text-terracotta font-medium border-b-2 border-terracotta pb-1">Heritage</a>
-                    <a href="genealogy.html" class="text-charcoal hover:text-terracotta transition-colors">Genealogy</a>
-                    <a href="directory.html" class="text-charcoal hover:text-terracotta transition-colors">Directory</a>
+                    <a href="index.html" class="text-ink/80 hover:text-pulse transition-colors">Home</a>
+                    <a href="heritage.html" class="text-pulse font-medium border-b-2 border-pulse pb-1">Stories</a>
+                    <a href="genealogy.html" class="text-ink/80 hover:text-pulse transition-colors">Lineage</a>
+                    <a href="directory.html" class="text-ink/80 hover:text-pulse transition-colors">Directory</a>
+                    <a href="dashboard.html" class="text-ink/80 hover:text-pulse transition-colors">Insights</a>
                 </div>
-                <button class="bg-terracotta text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition-colors">
-                    Join Community
+                <button class="bg-pulse text-white px-6 py-2 rounded-full shadow-lg shadow-pulse/30 hover:bg-purple-700 transition-colors">
+                    Launch Portal
                 </button>
             </div>
         </div>
@@ -134,11 +138,11 @@
     <section class="heritage-bg min-h-[60vh] flex items-center justify-center relative pt-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 class="text-5xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
-                Cultural <span class="text-gold">Heritage</span>
+                Story <span class="text-radiance">Field</span>
             </h1>
-            <p class="text-xl md:text-2xl text-cream mb-8 max-w-3xl mx-auto leading-relaxed">
-                Explore the rich tapestry of Urhobo traditions, customs, and historical legacy 
-                through our comprehensive cultural archive.
+            <p class="text-xl md:text-2xl text-mist mb-8 max-w-3xl mx-auto leading-relaxed">
+                Curated journeys through Urhobo traditions, soundscapes, materials, and made things—designed with
+                elders, artists, and youth collectives inside the Lumina Network.
             </p>
         </div>
     </section>
@@ -147,12 +151,12 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
-                    Urhobo <span class="text-terracotta">Kingdoms</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-ink mb-6">
+                    Urhobo <span class="text-pulse">Kingdom Atlas</span>
                 </h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Discover the geographical distribution and historical significance of Urhobo kingdoms 
-                    across the Niger Delta region.
+                    Discover the spatial stories of Urhobo kingdoms—where each clan's craft, trade, and ceremony
+                    intersect across the Niger Delta.
                 </p>
             </div>
             
@@ -162,45 +166,46 @@
                 </div>
                 
                 <div class="space-y-6">
-                    <div class="bg-gradient-to-br from-terracotta/10 to-ochre/10 p-6 rounded-2xl scroll-reveal">
-                        <h3 class="text-xl font-bold text-charcoal mb-4">Kingdom Information</h3>
+                    <div class="bg-gradient-to-br from-pulse/10 to-aura/10 p-6 rounded-2xl scroll-reveal">
+                        <h3 class="text-xl font-bold text-ink mb-4">Kingdom Information</h3>
                         <div id="kingdom-info" class="text-gray-600">
-                            <p class="mb-4">Click on a kingdom marker to learn more about its history, traditions, and significance.</p>
+                            <p class="mb-4">Tap any beacon on the Lumina atlas to surface tonal histories, migration paths, and the creative
+                                industries each kingdom powers today.</p>
                             <div class="space-y-3">
                                 <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-terracotta rounded-full mr-3"></div>
-                                    <span>Historic Kingdoms</span>
+                                    <div class="w-4 h-4 bg-pulse rounded-full mr-3"></div>
+                                    <span>Legacy Seats</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-ochre rounded-full mr-3"></div>
-                                    <span>Commercial Centers</span>
+                                    <div class="w-4 h-4 bg-aura rounded-full mr-3"></div>
+                                    <span>Trade Corridors</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-gold rounded-full mr-3"></div>
-                                    <span>Educational Hubs</span>
+                                    <div class="w-4 h-4 bg-radiance rounded-full mr-3"></div>
+                                    <span>Learning Hubs</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="bg-gradient-to-br from-forest/10 to-gold/10 p-6 rounded-2xl scroll-reveal">
-                        <h3 class="text-xl font-bold text-charcoal mb-4">Quick Facts</h3>
+                    <div class="bg-gradient-to-br from-grove/10 to-radiance/10 p-6 rounded-2xl scroll-reveal">
+                        <h3 class="text-xl font-bold text-ink mb-4">Quick Facts</h3>
                         <div class="space-y-3 text-gray-600">
                             <div class="flex justify-between">
-                                <span>Total Kingdoms:</span>
-                                <span class="font-bold text-forest">24</span>
+                                <span>Kingdom Nodes:</span>
+                                <span class="font-bold text-grove">24</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Major Clans:</span>
-                                <span class="font-bold text-forest">150+</span>
+                                <span>Clan Networks:</span>
+                                <span class="font-bold text-grove">150+</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Population:</span>
-                                <span class="font-bold text-forest">2M+</span>
+                                <span>Population Reach:</span>
+                                <span class="font-bold text-grove">2M+</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Languages:</span>
-                                <span class="font-bold text-forest">5+</span>
+                                <span class="font-bold text-grove">5+</span>
                             </div>
                         </div>
                     </div>
@@ -210,11 +215,11 @@
     </section>
 
     <!-- Timeline Section -->
-    <section class="py-20 bg-gradient-to-br from-cream to-white">
+    <section class="py-20 bg-gradient-to-br from-mist to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
-                    Historical <span class="text-terracotta">Timeline</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-ink mb-6">
+                    Legacy <span class="text-pulse">Timeline</span>
                 </h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                     Journey through the significant events and periods that have shaped Urhobo culture 
@@ -224,19 +229,19 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div class="relative pl-8">
-                    <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-ochre"></div>
+                    <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-aura"></div>
                     <div id="heritage-timeline" class="space-y-8">
                         <!-- Timeline items will be populated by JavaScript -->
                     </div>
                 </div>
                 
                 <div class="scroll-reveal">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-ochre/20">
-                        <h3 class="text-2xl font-bold text-charcoal mb-6">Timeline Details</h3>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-aura/20">
+                        <h3 class="text-2xl font-bold text-ink mb-6">Timeline Details</h3>
                         <div id="timeline-details">
                             <div class="text-center py-12">
-                                <div class="w-16 h-16 bg-terracotta/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg class="w-8 h-8 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-16 h-16 bg-pulse/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                 </div>
@@ -253,132 +258,132 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
-                    Cultural <span class="text-terracotta">Archive</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-ink mb-6">
+                    Culture <span class="text-pulse">Archive</span>
                 </h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Browse our extensive collection of cultural artifacts, traditions, and community contributions 
-                    that celebrate Urhobo heritage.
+                    Browse our evolving library of sound, motion, attire, cuisine, and craft—community submissions that
+                    keep Urhobo heritage glowing.
                 </p>
             </div>
             
             <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-4 mb-12 scroll-reveal">
-                <button class="heritage-filter active px-6 py-3 rounded-full border-2 border-terracotta text-terracotta font-medium transition-all hover:bg-terracotta hover:text-white" data-filter="all">
+                <button class="heritage-filter active px-6 py-3 rounded-full border-2 border-pulse text-pulse font-medium transition-all hover:bg-pulse hover:text-white" data-filter="all">
                     All Content
                 </button>
-                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-ochre text-ochre font-medium transition-all hover:bg-ochre hover:text-white" data-filter="traditions">
+                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-aura text-aura font-medium transition-all hover:bg-aura hover:text-white" data-filter="traditions">
                     Traditions
                 </button>
-                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-forest text-forest font-medium transition-all hover:bg-forest hover:text-white" data-filter="ceremonies">
+                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-grove text-grove font-medium transition-all hover:bg-grove hover:text-white" data-filter="ceremonies">
                     Ceremonies
                 </button>
-                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-gold text-gold font-medium transition-all hover:bg-gold hover:text-white" data-filter="artifacts">
+                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-radiance text-radiance font-medium transition-all hover:bg-radiance hover:text-white" data-filter="artifacts">
                     Artifacts
                 </button>
-                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-terracotta text-terracotta font-medium transition-all hover:bg-terracotta hover:text-white" data-filter="music">
+                <button class="heritage-filter px-6 py-3 rounded-full border-2 border-pulse text-pulse font-medium transition-all hover:bg-pulse hover:text-white" data-filter="music">
                     Music & Dance
                 </button>
             </div>
             
             <!-- Content Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="heritage-content-item bg-gradient-to-br from-terracotta/5 to-ochre/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="traditions">
-                    <div class="h-48 bg-gradient-to-br from-terracotta to-ochre"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-pulse/5 to-aura/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="traditions">
+                    <div class="h-48 bg-gradient-to-br from-pulse to-aura"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">Traditional Marriage Rites</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">Traditional Marriage Rites</h3>
                         <p class="text-gray-600 mb-4">
                             Explore the intricate customs and ceremonies surrounding Urhobo marriage traditions, 
                             from courtship to the wedding ceremony.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-terracotta font-medium">Traditions</span>
-                            <button class="text-terracotta hover:text-ochre transition-colors">
+                            <span class="text-sm text-pulse font-medium">Traditions</span>
+                            <button class="text-pulse hover:text-aura transition-colors">
                                 Learn More →
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="heritage-content-item bg-gradient-to-br from-forest/5 to-gold/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="ceremonies">
-                    <div class="h-48 bg-gradient-to-br from-forest to-gold"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-grove/5 to-radiance/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="ceremonies">
+                    <div class="h-48 bg-gradient-to-br from-grove to-radiance"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">New Yam Festival</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">New Yam Festival</h3>
                         <p class="text-gray-600 mb-4">
                             Discover the significance of the annual New Yam Festival, a celebration of harvest, 
                             gratitude, and community unity.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-forest font-medium">Ceremonies</span>
-                            <button class="text-forest hover:text-gold transition-colors">
+                            <span class="text-sm text-grove font-medium">Ceremonies</span>
+                            <button class="text-grove hover:text-radiance transition-colors">
                                 Learn More →
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="heritage-content-item bg-gradient-to-br from-ochre/5 to-gold/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="artifacts">
-                    <div class="h-48 bg-gradient-to-br from-ochre to-gold"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-aura/5 to-radiance/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="artifacts">
+                    <div class="h-48 bg-gradient-to-br from-aura to-radiance"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">Traditional Beadwork</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">Traditional Beadwork</h3>
                         <p class="text-gray-600 mb-4">
                             Admire the intricate artistry of Urhobo beadwork, from ceremonial necklaces 
                             to cultural symbols and decorative elements.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-ochre font-medium">Artifacts</span>
-                            <button class="text-ochre hover:text-gold transition-colors">
+                            <span class="text-sm text-aura font-medium">Artifacts</span>
+                            <button class="text-aura hover:text-radiance transition-colors">
                                 Learn More →
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="heritage-content-item bg-gradient-to-br from-gold/5 to-terracotta/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="music">
-                    <div class="h-48 bg-gradient-to-br from-gold to-terracotta"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-radiance/5 to-pulse/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="music">
+                    <div class="h-48 bg-gradient-to-br from-radiance to-pulse"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">Traditional Music</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">Traditional Music</h3>
                         <p class="text-gray-600 mb-4">
                             Experience the rhythmic patterns and melodic traditions that form the backbone 
                             of Urhobo cultural expression.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-gold font-medium">Music & Dance</span>
-                            <button class="text-gold hover:text-terracotta transition-colors">
+                            <span class="text-sm text-radiance font-medium">Music & Dance</span>
+                            <button class="text-radiance hover:text-pulse transition-colors">
                                 Learn More →
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="heritage-content-item bg-gradient-to-br from-terracotta/5 to-forest/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="traditions">
-                    <div class="h-48 bg-gradient-to-br from-terracotta to-forest"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-pulse/5 to-grove/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="traditions">
+                    <div class="h-48 bg-gradient-to-br from-pulse to-grove"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">Naming Ceremonies</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">Naming Ceremonies</h3>
                         <p class="text-gray-600 mb-4">
                             Learn about the sacred traditions surrounding the naming of newborns and 
                             the cultural significance of names in Urhobo society.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-terracotta font-medium">Traditions</span>
-                            <button class="text-terracotta hover:text-forest transition-colors">
+                            <span class="text-sm text-pulse font-medium">Traditions</span>
+                            <button class="text-pulse hover:text-grove transition-colors">
                                 Learn More →
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="heritage-content-item bg-gradient-to-br from-forest/5 to-ochre/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="ceremonies">
-                    <div class="h-48 bg-gradient-to-br from-forest to-ochre"></div>
+                <div class="heritage-content-item bg-gradient-to-br from-grove/5 to-aura/5 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-category="ceremonies">
+                    <div class="h-48 bg-gradient-to-br from-grove to-aura"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-charcoal mb-3">Age Grade Celebrations</h3>
+                        <h3 class="text-xl font-bold text-ink mb-3">Age Grade Celebrations</h3>
                         <p class="text-gray-600 mb-4">
                             Understand the importance of age grades in Urhobo society and the ceremonies 
                             that mark transitions between life stages.
                         </p>
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-forest font-medium">Ceremonies</span>
-                            <button class="text-forest hover:text-ochre transition-colors">
+                            <span class="text-sm text-grove font-medium">Ceremonies</span>
+                            <button class="text-grove hover:text-aura transition-colors">
                                 Learn More →
                             </button>
                         </div>
@@ -389,11 +394,11 @@
     </section>
 
     <!-- Community Contributions -->
-    <section class="py-20 bg-gradient-to-br from-cream to-white">
+    <section class="py-20 bg-gradient-to-br from-mist to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-charcoal mb-6">
-                    Community <span class="text-terracotta">Contributions</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-ink mb-6">
+                    Community <span class="text-pulse">Contributions</span>
                 </h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
                     Help preserve our heritage by sharing your knowledge, photos, and stories 
@@ -403,12 +408,12 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div class="scroll-reveal">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-terracotta/20">
-                        <h3 class="text-2xl font-bold text-charcoal mb-6">Share Your Knowledge</h3>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-pulse/20">
+                        <h3 class="text-2xl font-bold text-ink mb-6">Share Your Knowledge</h3>
                         <form class="space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-charcoal mb-2">Content Type</label>
-                                <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                                <label class="block text-sm font-medium text-ink mb-2">Content Type</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-pulse focus:border-transparent">
                                     <option>Traditional Story</option>
                                     <option>Cultural Practice</option>
                                     <option>Historical Event</option>
@@ -417,15 +422,15 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-charcoal mb-2">Title</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent" placeholder="Enter a descriptive title">
+                                <label class="block text-sm font-medium text-ink mb-2">Title</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-pulse focus:border-transparent" placeholder="Enter a descriptive title">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-charcoal mb-2">Description</label>
-                                <textarea rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent" placeholder="Share your knowledge about this cultural element"></textarea>
+                                <label class="block text-sm font-medium text-ink mb-2">Description</label>
+                                <textarea rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-pulse focus:border-transparent" placeholder="Share your knowledge about this cultural element"></textarea>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-charcoal mb-2">Upload Images</label>
+                                <label class="block text-sm font-medium text-ink mb-2">Upload Images</label>
                                 <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
                                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -434,7 +439,7 @@
                                     <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-terracotta text-white py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors font-semibold">
+                            <button type="submit" class="w-full bg-pulse text-white py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors font-semibold">
                                 Submit Contribution
                             </button>
                         </form>
@@ -442,27 +447,27 @@
                 </div>
                 
                 <div class="scroll-reveal">
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-forest/20">
-                        <h3 class="text-2xl font-bold text-charcoal mb-6">Recent Contributions</h3>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-grove/20">
+                        <h3 class="text-2xl font-bold text-ink mb-6">Recent Contributions</h3>
                         <div class="space-y-6">
-                            <div class="border-l-4 border-terracotta pl-4">
-                                <h4 class="font-semibold text-charcoal">Traditional Wedding Customs</h4>
+                            <div class="border-l-4 border-pulse pl-4">
+                                <h4 class="font-semibold text-ink">Traditional Wedding Customs</h4>
                                 <p class="text-sm text-gray-600 mb-2">By Mama Ese Ovie • 3 days ago</p>
                                 <p class="text-gray-700 text-sm">Detailed documentation of the traditional wedding ceremony including the role of the bride's family...</p>
                             </div>
-                            <div class="border-l-4 border-ochre pl-4">
-                                <h4 class="font-semibold text-charcoal">Age Grade System in Okpe</h4>
+                            <div class="border-l-4 border-aura pl-4">
+                                <h4 class="font-semibold text-ink">Age Grade System in Okpe</h4>
                                 <p class="text-sm text-gray-600 mb-2">By Chief Emeka • 1 week ago</p>
                                 <p class="text-gray-700 text-sm">Comprehensive overview of how age grades function in Okpe kingdom and their social significance...</p>
                             </div>
-                            <div class="border-l-4 border-forest pl-4">
-                                <h4 class="font-semibold text-charcoal">Traditional Medicine Practices</h4>
+                            <div class="border-l-4 border-grove pl-4">
+                                <h4 class="font-semibold text-ink">Traditional Medicine Practices</h4>
                                 <p class="text-sm text-gray-600 mb-2">By Dr. Grace Oteri • 2 weeks ago</p>
                                 <p class="text-gray-700 text-sm">Documentation of traditional healing methods and medicinal plants used in Urhobo communities...</p>
                             </div>
                         </div>
                         <div class="mt-6 pt-6 border-t border-gray-200">
-                            <a href="#" class="text-forest font-semibold hover:text-gold transition-colors">
+                            <a href="#" class="text-grove font-semibold hover:text-radiance transition-colors">
                                 View All Contributions →
                             </a>
                         </div>
@@ -473,17 +478,17 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-charcoal text-cream py-12">
+    <footer class="bg-ink text-mist py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <h3 class="text-2xl font-display font-bold text-gold mb-4">UAPR</h3>
+                <h3 class="text-2xl font-display font-bold text-radiance mb-4 tracking-wide">ULN</h3>
                 <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
-                    Preserving Urhobo heritage, connecting communities, and celebrating our shared cultural identity 
-                    through digital innovation and ancestral reverence.
+                    Urhobo Lumina Network is a community of archivists, technologists, designers, and elders
+                    who steward stories with reverence and release them with futuristic aesthetics.
                 </p>
-                <div class="border-t border-gray-700 pt-6">
+                <div class="border-t border-white/10 pt-6">
                     <p class="text-gray-500">
-                        © 2024 Urhobo Ancestral & Professional Register. All rights reserved.
+                        © 2024 Urhobo Lumina Network. Crafted with ancestral light.
                     </p>
                 </div>
             </div>

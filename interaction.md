@@ -1,66 +1,47 @@
-# UAPR Website Interaction Design
+# ULN Interaction + Motion Narrative
 
-## Core Interactive Components
+## Core Systems
 
-### 1. Ancestry Tree Builder
-**Function**: Interactive family tree creation and visualization
-- **Interface**: Drag-and-drop family tree builder with nodes for family members
-- **Features**: 
-  - Add family members with photos, birth/death dates, locations
-  - Connect family relationships (parent-child, siblings, spouses)
-  - Search and connect with existing family trees in database
-  - Export family tree as PDF or image
-- **Multi-turn Loop**: Users can continuously expand their family tree, add branches, and discover connections
+### 1. Lineage Lab
+**Purpose**: Collaborative constellation builder for families.
+- **Canvas**: Zoomable WebGL tree with smooth pan + focus on any node.
+- **Actions**: Add members, upload media, drop audio quotes, tag rituals, request merges with nearby trees.
+- **Loops**: Every new node prompts suggested relatives + verification tasks so users keep returning until each branch glows “complete”.
 
-### 2. Cultural Heritage Explorer
-**Function**: Interactive map and timeline of Urhobo culture and history
-- **Interface**: 
-  - Interactive map showing different Urhobo kingdoms and clans
-  - Timeline slider to explore historical periods
-  - Clickable cultural elements (festivals, traditions, oral histories)
-- **Features**:
-  - Filter by kingdom, time period, or cultural category
-  - Upload and share cultural content (photos, stories, audio recordings)
-  - Comment and discuss cultural elements
-- **Multi-turn Loop**: Users can continuously discover new cultural content and contribute their own knowledge
+### 2. Culture Engine
+**Purpose**: Map + timeline that streams Urhobo ceremonies, crafts, and oral histories.
+- **Canvas**: Split layout—left map (ECharts geo), right timeline + card stack.
+- **Filters**: Kingdom, creative discipline, emotion tags, time period.
+- **Loops**: Users toggle between “Explore” and “Contribute” modes to upload artifacts, audio, or event recaps. Contribution queue gives status updates.
 
-### 3. Professional Network Directory
-**Function**: Searchable database of Urhobo professionals and their achievements
-- **Interface**:
-  - Advanced search with filters (profession, location, education, kingdom)
-  - Professional profile cards with achievements and contact info
-  - Interactive charts showing professional distribution
-- **Features**:
-  - Create and update professional profiles
-  - Connect with other professionals
-  - View statistics and insights about Urhobo professional achievements
-  - Job board and collaboration opportunities
-- **Multi-turn Loop**: Users can build their network, update profiles, and discover collaboration opportunities
+### 3. Lumina Directory
+**Purpose**: Verified registry of Urhobo professionals and maker guilds.
+- **Interface**: Elastic search with stacked pill filters, spotlight cards, and diaspora heatmap.
+- **Features**: Bookmark pipelines, mentorship badges, event RSVPs, and one-click referrals.
+- **Loops**: Members refresh their profile to maintain “Signal Strength” scores; higher signals unlock directory placement and dashboard highlights.
 
-### 4. Recognition Hall of Fame
-**Function**: Interactive showcase of notable Urhobo individuals
-- **Interface**:
-  - Gallery-style display with filterable categories
-  - Detailed profile pages with achievements and contributions
-  - Voting system for community recognition
-- **Features**:
-  - Nominate individuals for recognition
-  - Browse by field of achievement, time period, or kingdom
-  - Share stories and testimonials
-  - Interactive timeline of achievements
-- **Multi-turn Loop**: Community can continuously nominate and celebrate achievements
+### 4. Insight Dashboard
+**Purpose**: Narrative analytics for culture leads and donors.
+- **Interface**: Animated counters, comparison charts, radar maps, and contributor wall.
+- **Signals**: Weekly progress emails embed mini sparkline charts pulled from the dashboard to pull people back in.
 
-## User Journey Flow
-1. **Landing Page**: Impressive hero section showcasing Urhobo culture with call-to-action
-2. **Registration**: Choose user type (family historian, cultural contributor, professional)
-3. **Dashboard**: Personalized view based on interests and connections
-4. **Interactive Tools**: Access to tree builder, cultural explorer, professional directory
-5. **Community Features**: Connect, share, and collaborate with other users
+## Motion Principles
+- **Breath Rhythm**: Scroll reveals use 80–120ms stagger, 24px translate, easing `easeOutQuart` via Anime.js.
+- **Hover Physics**: Cards scale to 1.04 with glow ring; filters animate between outline and filled states.
+- **Typed Moments**: Hero statements cycle through four luminous phrases using Typed.js to keep energy high.
+- **Carousel Energy**: Splide slides auto-play but pause on hover; slide overlays fade-in with gradient masks.
+- **Data Pulse**: ECharts elements reuse brand palette, glowing tooltips, and soft drop shadows.
 
-## Technical Requirements
-- Responsive design for mobile and desktop
-- Multi-language support (English with Urhobo language elements)
-- Image upload and processing for family photos and cultural content
-- Database integration for storing family trees and profiles
-- Search functionality across all components
-- User authentication and profile management
+## Journey Blueprint
+1. **Landing** → hero explains mission with typed line, CTA triad.
+2. **Orientation** → quick form chooses focus (Lineage, Culture, Directory) to personalize cues.
+3. **Workspace** → user enters respective studio (tree canvas, explorer, directory workspace) with saved progress.
+4. **Contribution** → upload wizard surfaces privacy + verification steps.
+5. **Feedback** → dashboard + email recaps celebrate contributions, offer next missions, and highlight cross-team collabs.
+
+## Technical Rhythm
+- Responsive Tailwind layout, CSS variables for radiance glows.
+- CDN-delivered libs: Anime.js, Typed.js, Splide.js, ECharts.
+- Lazy-load heavy imagery and videos to keep hero responsive.
+- IndexedDB cache for offline draft entries (family stories, culture uploads) before syncing.
+- Role-based auth differentiates storytellers, editors, and admins.

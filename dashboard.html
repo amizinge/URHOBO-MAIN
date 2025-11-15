@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - UAPR</title>
+    <title>ULN Insights - Lumina Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
@@ -12,897 +12,145 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'terracotta': '#B85450',
-                        'ochre': '#CC8B3C',
-                        'forest': '#2D5016',
-                        'cream': '#F5F1E8',
-                        'gold': '#D4AF37',
-                        'charcoal': '#2C2C2C'
+                        'pulse': '#7C3AED',
+                        'aura': '#0EA5E9',
+                        'grove': '#0F766E',
+                        'mist': '#F6F4FF',
+                        'radiance': '#FCD34D',
+                        'ink': '#050B1A'
                     },
                     fontFamily: {
-                        'display': ['Playfair Display', 'serif'],
-                        'body': ['Inter', 'sans-serif'],
-                        'accent': ['Crimson Text', 'serif']
+                        'display': ['Fraunces', 'serif'],
+                        'body': ['Space Grotesk', 'sans-serif'],
+                        'accent': ['Spectral', 'serif']
                     }
                 }
             }
         }
     </script>
-    
     <style>
-        .dashboard-bg {
-            background: linear-gradient(135deg, #0a0f1f, #111827);
+        .insights-bg {
+            background: linear-gradient(135deg, rgba(5, 11, 26, 0.95), rgba(124, 58, 237, 0.85));
+            position: relative;
+            overflow: hidden;
         }
-        .profile-card, .generation-card, .asset-card {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 25px rgba(0, 200, 255, 0.08);
-            transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        .insights-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.35), transparent 55%),
+                        radial-gradient(circle at 80% 0%, rgba(252, 211, 77, 0.3), transparent 50%);
+            pointer-events: none;
         }
-        .profile-card:hover, .generation-card:hover, .asset-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 0 45px rgba(0, 200, 255, 0.2);
+        .insight-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
+        .chart-container {
+            height: 320px;
         }
-        .scroll-reveal.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .family-tree-container {
-            height: 800px;
-            background: #F5F1E8;
-            border-radius: 12px;
-            border: 2px solid #CC8B3C;
-        }
-        .glow-text {
-            text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
-        }
-        .nav-tab {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.12);
-            transition: all 0.3s cubic-bezier(.4,2,.6,1);
-            cursor: pointer;
-        }
-        .nav-tab.active {
-            background: rgba(0, 200, 255, 0.15);
-            border-color: rgba(0,200,255,0.45);
-            color: #0ff;
-        }
-        .nav-tab:hover {
-            background: rgba(0, 200, 255, 0.08);
-            color: #0ff;
+        .glow-ring {
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
         }
     </style>
-<base target="_blank">
 </head>
-<body class="font-body bg-cream text-charcoal">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md shadow-sm z-50">
+<body class="font-body bg-mist text-ink">
+    <nav class="fixed top-0 w-full bg-mist/95 backdrop-blur-xl shadow-sm z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-display font-bold text-terracotta">UAPR</h1>
-                    <span class="ml-2 text-sm text-gray-600 hidden sm:block">User Dashboard</span>
+                    <h1 class="text-2xl font-display font-bold text-pulse tracking-wide">ULN</h1>
+                    <span class="ml-2 text-xs sm:text-sm text-gray-500 hidden sm:block uppercase tracking-[0.2em]">
+                        Urhobo Lumina Network
+                    </span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-charcoal hover:text-terracotta transition-colors">Home</a>
-                    <a href="heritage.html" class="text-charcoal hover:text-terracotta transition-colors">Heritage</a>
-                    <a href="genealogy.html" class="text-charcoal hover:text-terracotta transition-colors">Genealogy</a>
-                    <a href="directory.html" class="text-charcoal hover:text-terracotta transition-colors">Directory</a>
+                    <a href="index.html" class="text-ink/80 hover:text-pulse transition-colors">Home</a>
+                    <a href="heritage.html" class="text-ink/80 hover:text-pulse transition-colors">Stories</a>
+                    <a href="genealogy.html" class="text-ink/80 hover:text-pulse transition-colors">Lineage</a>
+                    <a href="directory.html" class="text-ink/80 hover:text-pulse transition-colors">Directory</a>
+                    <a href="dashboard.html" class="text-pulse font-medium border-b-2 border-pulse pb-1">Insights</a>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-terracotta transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"></path>
-                        </svg>
-                    </button>
-                    <div class="w-8 h-8 bg-terracotta rounded-full flex items-center justify-center text-white font-bold">
-                        SA
-                    </div>
-                </div>
+                <button class="bg-pulse text-white px-6 py-2 rounded-full shadow-lg shadow-pulse/30 hover:bg-purple-700 transition-colors">
+                    Launch Portal
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Dashboard Header -->
-    <section class="dashboard-bg pt-20 pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="absolute inset-0 pointer-events-none opacity-20">
-                <div class="w-full h-full animate-pulse bg-gradient-to-br from-cyan-500/20 to-purple-500/20 blur-3xl"></div>
-            </div>
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-20 h-20 bg-terracotta rounded-full flex items-center justify-center text-white font-bold text-2xl mr-6">
-                        SA
+    <header class="insights-bg text-white pt-32 pb-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <p class="uppercase tracking-[0.5em] text-xs mb-4 text-white/70">Lumina Dashboard</p>
+            <h1 class="text-4xl md:text-6xl font-display font-semibold mb-6">
+                Insight Stories From The Network
+            </h1>
+            <p class="text-xl text-mist/90 max-w-3xl mx-auto">
+                Monitor how Urhobo families, culture labs, and professional guilds connect every week. Data flows from
+                our community submissions, events, and diaspora meetups.
+            </p>
+        </div>
+    </header>
+
+    <main class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            <section>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-pulse/15 scroll-reveal">
+                        <p class="text-sm text-gray-500">Active Storytellers</p>
+                        <p class="text-4xl font-bold text-ink mt-2">1,240</p>
+                        <p class="text-green-500 text-sm mt-3">▲ 12% vs last month</p>
                     </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-aura/15 scroll-reveal">
+                        <p class="text-sm text-gray-500">New Lineage Nodes</p>
+                        <p class="text-4xl font-bold text-ink mt-2">382</p>
+                        <p class="text-green-500 text-sm mt-3">▲ 8% vs last month</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-grove/15 scroll-reveal">
+                        <p class="text-sm text-gray-500">Cultural Uploads</p>
+                        <p class="text-4xl font-bold text-ink mt-2">965</p>
+                        <p class="text-green-500 text-sm mt-3">▲ 19% vs last month</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-radiance/25 scroll-reveal">
+                        <p class="text-sm text-gray-500">Diaspora Cities</p>
+                        <p class="text-4xl font-bold text-ink mt-2">87</p>
+                        <p class="text-blue-500 text-sm mt-3">+5 new clusters</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-xl border border-pulse/15 scroll-reveal">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-ink">Engagement Velocity</h3>
+                            <p class="text-gray-500 text-sm">12 week view of uploads + events</p>
+                        </div>
+                        <span class="px-3 py-1 text-xs rounded-full bg-pulse/10 text-pulse">Live</span>
+                    </div>
+                    <div id="engagement-chart" class="chart-container"></div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-xl border border-aura/15 scroll-reveal">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-ink">Diaspora Heatmap</h3>
+                            <p class="text-gray-500 text-sm">Top cities powering submissions</p>
+                        </div>
+                        <span class="px-3 py-1 text-xs rounded-full bg-aura/10 text-aura">Updated hourly</span>
+                    </div>
+                    <div id="diaspora-chart" class="chart-container"></div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-8 shadow-xl border border-ink/5 scroll-reveal">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
                     <div>
-                        <h1 class="text-3xl font-display font-bold text-charcoal glow-text">Welcome back, Sonia!</h1>
-                        <p class="text-gray-600 mt-1">Manage your family tree and cultural heritage</p>
+                        <h3 class="text-2xl font-bold text-ink">Top Contributors</h3>
+                        <p class="text-gray-500">Storytellers and researchers fueling the network this month.</p>
                     </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-2xl font-bold text-terracotta">9 Generations</div>
-                    <div class="text-gray-600">Documented</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dashboard Navigation -->
-    <section class="bg-white border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-1">
-                <div class="nav-tab active px-6 py-4 rounded-t-lg font-medium" data-tab="profile">
-                    <span>👤 Personal Profile</span>
-                </div>
-                <div class="nav-tab px-6 py-4 rounded-t-lg font-medium" data-tab="family-tree">
-                    <span>🌐 Family Tree</span>
-                </div>
-                <div class="nav-tab px-6 py-4 rounded-t-lg font-medium" data-tab="generations">
-                    <span>🧬 Generations</span>
-                </div>
-                <div class="nav-tab px-6 py-4 rounded-t-lg font-medium" data-tab="assets">
-                    <span>💠 Family Assets</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dashboard Content -->
-    <section class="py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Personal Profile Tab -->
-            <div id="profile-tab" class="tab-content">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Personal Information -->
-                    <div class="lg:col-span-2">
-                        <div class="profile-card bg-white p-8 rounded-2xl shadow-lg border border-terracotta/20">
-                            <div class="flex items-center justify-between mb-6">
-                                <h2 class="text-2xl font-bold text-charcoal">Personal Information</h2>
-                                <button class="bg-terracotta text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors">
-                                    Edit Profile
-                                </button>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Full Name</label>
-                                    <input type="text" value="Sonia Abu" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Date of Birth</label>
-                                    <input type="date" value="1985-03-15" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Occupation</label>
-                                    <input type="text" value="Project Manager" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Company/Organization</label>
-                                    <input type="text" value="Tech Solutions Ltd" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Email</label>
-                                    <input type="email" value="sonia.abu@email.com" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Phone</label>
-                                    <input type="tel" value="+234-80-1234-5678" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-medium text-charcoal mb-2">Family Address</label>
-                                    <textarea rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">123 Family Compound, Okpe Kingdom, Delta State, Nigeria</textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-8 pt-6 border-t border-gray-200">
-                                <h3 class="text-xl font-bold text-charcoal mb-4">Family Background</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-charcoal mb-2">Kingdom</label>
-                                        <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                            <option value="okpe" selected>Okpe</option>
-                                            <option value="sapele">Sapele</option>
-                                            <option value="abraka">Abraka</option>
-                                            <option value="ughelli">Ughelli</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-charcoal mb-2">Clan</label>
-                                        <input type="text" value="Ovie Clan" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-charcoal mb-2">Village</label>
-                                        <input type="text" value="Abraka Village" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-charcoal mb-2">Family Status</label>
-                                        <select class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-terracotta focus:border-transparent">
-                                            <option value="eldest" selected>Eldest Child</option>
-                                            <option value="middle">Middle Child</option>
-                                            <option value="youngest">Youngest Child</option>
-                                            <option value="only">Only Child</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Quick Stats -->
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-br from-terracotta/10 to-ochre/10 p-6 rounded-2xl">
-                            <h3 class="text-lg font-bold text-charcoal mb-4">Family Tree Progress</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-sm">Generations</span>
-                                    <span class="font-bold text-terracotta">9/9</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-terracotta h-2 rounded-full" style="width: 100%"></div>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm">Members</span>
-                                    <span class="font-bold text-ochre">247</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-sm">Verified</span>
-                                    <span class="font-bold text-forest">189</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gradient-to-br from-forest/10 to-gold/10 p-6 rounded-2xl">
-                            <h3 class="text-lg font-bold text-charcoal mb-4">Recent Activity</h3>
-                            <div class="space-y-3 text-sm">
-                                <div class="flex items-start">
-                                    <div class="w-2 h-2 bg-terracotta rounded-full mt-2 mr-3"></div>
-                                    <div>
-                                        <p class="font-medium">Added new member</p>
-                                        <p class="text-gray-600">Chief Ese Ovie - 2 days ago</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-2 h-2 bg-ochre rounded-full mt-2 mr-3"></div>
-                                    <div>
-                                        <p class="font-medium">Updated family address</p>
-                                        <p class="text-gray-600">Lagos branch - 1 week ago</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-2 h-2 bg-forest rounded-full mt-2 mr-3"></div>
-                                    <div>
-                                        <p class="font-medium">Connected with relative</p>
-                                        <p class="text-gray-600">John Ovie - 2 weeks ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gradient-to-br from-gold/10 to-terracotta/10 p-6 rounded-2xl">
-                            <h3 class="text-lg font-bold text-charcoal mb-4">Quick Actions</h3>
-                            <div class="space-y-2">
-                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors p-2 rounded-md hover:bg-white">
-                                    📸 Upload Family Photos
-                                </button>
-                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors p-2 rounded-md hover:bg-white">
-                                    👨‍👩‍👧‍👦 Add Family Member
-                                </button>
-                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors p-2 rounded-md hover:bg-white">
-                                    📄 Generate Family Report
-                                </button>
-                                <button class="w-full text-left text-sm text-gray-600 hover:text-terracotta transition-colors p-2 rounded-md hover:bg-white">
-                                    🔗 Share Tree
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Family Tree Tab -->
-            <div id="family-tree-tab" class="tab-content hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    <div class="lg:col-span-1">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-ochre/20 sticky top-24">
-                            <h3 class="text-xl font-bold text-charcoal mb-6">Tree Controls</h3>
-                            
-                            <div class="space-y-3 mb-6">
-                                <button class="w-full bg-terracotta text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors text-sm font-medium">
-                                    Add Member
-                                </button>
-                                <button class="w-full bg-ochre text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors text-sm font-medium">
-                                    Import Data
-                                </button>
-                                <button class="w-full bg-forest text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors text-sm font-medium">
-                                    Export Tree
-                                </button>
-                            </div>
-                            
-                            <div class="border-t border-gray-200 pt-4">
-                                <h4 class="font-semibold text-charcoal mb-3 text-sm">View Options</h4>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="mr-2 text-terracotta" checked>
-                                        <span class="text-sm">Show Photos</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="mr-2 text-terracotta" checked>
-                                        <span class="text-sm">Show Dates</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="mr-2 text-terracotta">
-                                        <span class="text-sm">Show Locations</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="border-t border-gray-200 pt-4 mt-4">
-                                <h4 class="font-semibold text-charcoal mb-3 text-sm">Search Tree</h4>
-                                <input type="text" placeholder="Find family member..." class="w-full p-2 border border-gray-300 rounded-md text-sm">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="lg:col-span-3">
-                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-terracotta/20">
-                            <div class="flex items-center justify-between mb-6">
-                                <h2 class="text-2xl font-bold text-charcoal">9-Generation Family Tree</h2>
-                                <div class="flex space-x-2">
-                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300 transition-colors">
-                                        Zoom In
-                                    </button>
-                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300 transition-colors">
-                                        Zoom Out
-                                    </button>
-                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300 transition-colors">
-                                        Reset
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="family-tree-detailed" class="family-tree-container"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Generations Tab -->
-            <div id="generations-tab" class="tab-content hidden">
-                <div class="space-y-8">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-charcoal mb-4">Family Generations</h2>
-                        <p class="text-gray-600 max-w-2xl mx-auto">
-                            Explore detailed information about each generation in your family tree, 
-                            from great-great-grandparents to current family members.
-                        </p>
-                    </div>
-                    
-                    <!-- Generation 1 (Great-Great-Grandparents) -->
-                    <div class="generation-card p-6 rounded-2xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-charcoal">Generation 1: Great-Great-Grandparents</h3>
-                            <span class="text-sm text-gray-600">Born: 1850-1880</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    EO
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Efe Ovie (1855-1920)</h4>
-                                    <p class="text-sm text-gray-600">Patriarch • Farmer • Okpe Kingdom</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-ochre rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    AO
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Amina Ovie (1858-1925)</h4>
-                                    <p class="text-sm text-gray-600">Matriarch • Trader • Okpe Kingdom</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Generation 2 (Great-Grandparents) -->
-                    <div class="generation-card p-6 rounded-2xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-charcoal">Generation 2: Great-Grandparents</h3>
-                            <span class="text-sm text-gray-600">Born: 1880-1910</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-forest rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    IO
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Igho Ovie (1892-1960)</h4>
-                                    <p class="text-sm text-gray-600">First Son • Teacher • Okpe Kingdom</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    MO
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Maria Ovie (1895-1965)</h4>
-                                    <p class="text-sm text-gray-600">Wife • Midwife • Okpe Kingdom</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Generation 3 (Grandparents) -->
-                    <div class="generation-card p-6 rounded-2xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-charcoal">Generation 3: Grandparents</h3>
-                            <span class="text-sm text-gray-600">Born: 1910-1940</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    SO
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Sonia Ovie (1920-1990)</h4>
-                                    <p class="text-sm text-gray-600">Eldest Daughter • Business Owner • Okpe Kingdom</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-ochre rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    JA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">John Abu (1925-1995)</h4>
-                                    <p class="text-sm text-gray-600">Husband • Engineer • Sapele Kingdom</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Current Generation (Parents) -->
-                    <div class="generation-card p-6 rounded-2xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-charcoal">Generation 4: Parents</h3>
-                            <span class="text-sm text-gray-600">Born: 1940-1970</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-forest rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    SA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Sonia Abu (1955-Present)</h4>
-                                    <p class="text-sm text-gray-600">You • Project Manager • Lagos, Nigeria</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 bg-gold rounded-full flex items-center justify-center text-white font-bold mr-4">
-                                    +S
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Spouse (To Be Added)</h4>
-                                    <p class="text-sm text-gray-600">Click to add spouse information</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Siblings -->
-                    <div class="generation-card p-6 rounded-2xl">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-bold text-charcoal">Siblings</h3>
-                            <span class="text-sm text-gray-600">3 Brothers & 2 Sisters</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-terracotta rounded-full flex items-center justify-center text-white font-bold mr-3">
-                                    MA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Michael Abu</h4>
-                                    <p class="text-xs text-gray-600">Older Brother • Doctor</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-ochre rounded-full flex items-center justify-center text-white font-bold mr-3">
-                                    EA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Emeka Abu</h4>
-                                    <p class="text-xs text-gray-600">Younger Brother • Engineer</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-forest rounded-full flex items-center justify-center text-white font-bold mr-3">
-                                    PA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Peter Abu</h4>
-                                    <p class="text-xs text-gray-600">Younger Brother • Lawyer</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-white font-bold mr-3">
-                                    AA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Amaka Abu</h4>
-                                    <p class="text-xs text-gray-600">Older Sister • Teacher</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-terracotta rounded-full flex items-center justify-center text-white font-bold mr-3">
-                                    CA
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal">Chioma Abu</h4>
-                                    <p class="text-xs text-gray-600">Younger Sister • Nurse</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Family Assets Tab -->
-            <div id="assets-tab" class="tab-content hidden">
-                <div class="space-y-8">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-charcoal mb-4">Family Assets & Properties</h2>
-                        <p class="text-gray-600 max-w-2xl mx-auto">
-                            Document and track family assets, properties, and valuable possessions 
-                            across generations for inheritance and historical records.
-                        </p>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Real Estate -->
-                        <div class="asset-card p-6 rounded-2xl">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-xl font-bold text-charcoal">Real Estate</h3>
-                                <button class="bg-forest text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors text-sm">
-                                    Add Property
-                                </button>
-                            </div>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Family Compound</h4>
-                                        <span class="text-sm text-gray-600">Okpe Kingdom</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Main family residence and ancestral home</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Acquired: 1950</span>
-                                        <span class="font-medium text-forest">Current Value: ₦15M</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Lagos Property</h4>
-                                        <span class="text-sm text-gray-600">Lagos Island</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Commercial building with rental income</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Acquired: 1985</span>
-                                        <span class="font-medium text-forest">Current Value: ₦45M</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Abuja Land</h4>
-                                        <span class="text-sm text-gray-600">FCT Abuja</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Investment land for future development</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Acquired: 2010</span>
-                                        <span class="font-medium text-forest">Current Value: ₦25M</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Valuables & Investments -->
-                        <div class="asset-card p-6 rounded-2xl">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-xl font-bold text-charcoal">Valuables & Investments</h3>
-                                <button class="bg-forest text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors text-sm">
-                                    Add Asset
-                                </button>
-                            </div>
-                            
-                            <div class="space-y-4">
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Traditional Artifacts</h4>
-                                        <span class="text-sm text-gray-600">Cultural Heritage</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Royal beads, ceremonial masks, historical documents</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Inherited: Multiple generations</span>
-                                        <span class="font-medium text-forest">Value: Priceless</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Stock Portfolio</h4>
-                                        <span class="text-sm text-gray-600">Financial Investment</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Diversified portfolio including tech and banking stocks</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Started: 2005</span>
-                                        <span class="font-medium text-forest">Current Value: ₦12M</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white p-4 rounded-lg border border-forest/20">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <h4 class="font-semibold text-charcoal">Family Business</h4>
-                                        <span class="text-sm text-gray-600">Trading Company</span>
-                                    </div>
-                                    <p class="text-sm text-gray-600 mb-2">Import/export business established in 1970s</p>
-                                    <div class="flex justify-between text-sm">
-                                        <span>Founded: 1975</span>
-                                        <span class="font-medium text-forest">Annual Revenue: ₦50M</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Asset Summary -->
-                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gold/20">
-                        <h3 class="text-2xl font-bold text-charcoal mb-6">Asset Summary</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-terracotta mb-2">₦97M</div>
-                                <div class="text-gray-600">Total Value</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-ochre mb-2">8</div>
-                                <div class="text-gray-600">Properties</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-forest mb-2">15</div>
-                                <div class="text-gray-600">Valuable Items</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-gold mb-2">5</div>
-                                <div class="text-gray-600">Businesses</div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-8 pt-6 border-t border-gray-200">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <h4 class="font-semibold text-charcoal mb-3">Distribution Plan</h4>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Equal inheritance</span>
-                                            <span class="font-medium">6 children</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Cultural artifacts</span>
-                                            <span class="font-medium">Eldest son</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>Family compound</span>
-                                            <span class="font-medium">Community trust</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-charcoal mb-3">Legal Status</h4>
-                                    <div class="space-y-2 text-sm">
-                                        <div class="flex items-center">
-                                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                            <span>Will registered</span>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                            <span>Property titles verified</span>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <div class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
-                                            <span>Business succession plan pending</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Floating Quick Action Button -->
-    <div class="fixed bottom-6 right-6">
-        <button class="px-6 py-3 rounded-full bg-cyan-500 text-black font-bold shadow-xl hover:bg-cyan-400 transition-all hover:scale-105">
-            + Quick Add
-        </button>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-charcoal text-cream py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h3 class="text-2xl font-display font-bold text-gold mb-4">UAPR</h3>
-                <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
-                    Preserving Urhobo heritage, connecting communities, and celebrating our shared cultural identity 
-                    through digital innovation and ancestral reverence.
-                </p>
-                <div class="border-t border-gray-700 pt-6">
-                    <p class="text-gray-500">
-                        © 2024 Urhobo Ancestral & Professional Register. All rights reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Tab Navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.nav-tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const targetTab = this.dataset.tab;
-                    
-                    // Remove active class from all tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-                    
-                    // Hide all tab contents
-                    tabContents.forEach(content => content.classList.add('hidden'));
-                    // Show target tab content
-                    const targetContent = document.getElementById(targetTab + '-tab');
-                    if (targetContent) {
-                        targetContent.classList.remove('hidden');
-                    }
-                });
-            });
-            
-            // Initialize family tree
-            initializeDetailedFamilyTree();
-        });
-        
-        function initializeDetailedFamilyTree() {
-            const treeContainer = document.getElementById('family-tree-detailed');
-            if (!treeContainer) return;
-            
-            // Sample 9-generation family tree data
-            const familyData = {
-                name: "Efe Ovie (1855-1920)",
-                children: [
-                    {
-                        name: "Igho Ovie (1892-1960)",
-                        children: [
-                            {
-                                name: "Sonia Ovie (1920-1990)",
-                                children: [
-                                    {
-                                        name: "Sonia Abu (1955-Present)",
-                                        children: [
-                                            {
-                                                name: "Michael Abu (1980-Present)",
-                                                children: []
-                                            },
-                                            {
-                                                name: "Amaka Abu (1982-Present)",
-                                                children: []
-                                            },
-                                            {
-                                                name: "You (1985-Present)",
-                                                children: []
-                                            },
-                                            {
-                                                name: "Emeka Abu (1987-Present)",
-                                                children: []
-                                            },
-                                            {
-                                                name: "Peter Abu (1990-Present)",
-                                                children: []
-                                            },
-                                            {
-                                                name: "Chioma Abu (1992-Present)",
-                                                children: []
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            };
-            
-            const treeChart = echarts.init(treeContainer);
-            const treeOption = {
-                tooltip: {
-                    trigger: 'item',
-                    triggerOn: 'mousemove',
-                    formatter: function(params) {
-                        return `<strong>${params.data.name}</strong><br/>Click to view details`;
-                    }
-                },
-                series: [
-                    {
-                        type: 'tree',
-                        data: [familyData],
-                        top: '5%',
-                        left: '5%',
-                        bottom: '5%',
-                        right: '5%',
-                        symbolSize: 10,
-                        label: {
-                            position: 'left',
-                            verticalAlign: 'middle',
-                            align: 'right',
-                            fontSize: 11,
-                            color: '#2C2C2C',
-                            distance: 10
-                        },
-                        leaves: {
-                            label: {
-                                position: 'right',
-                                verticalAlign: 'middle',
-                                align: 'left'
-                            }
-                        },
-                        emphasis: {
-                            focus: 'descendant'
-                        },
-                        expandAndCollapse: true,
-                        animationDuration: 550,
-                        animationDurationUpdate: 750,
-                        itemStyle: {
-                            color: '#00E5FF',
-                            borderColor: '#0FF',
-                            borderWidth: 2,
-                            shadowBlur: 18,
-                            shadowColor: 'rgba(0,255,255,0.4)'
-                        },
-                        lineStyle: {
-                            color: '#0ff',
-                            width: 1.5,
-                            opacity: 0.6
-                        }
-                    }
-                ]
-            };
-            treeChart.setOption(treeOption);
-            
-            // Handle tree interactions
-            treeChart.on('click', function(params) {
-                if (params.data) {
-                    alert(`Family Member: ${params.data.name}\n\nClick to edit or view detailed information.`);
-                }
-            });
-        }
-    </script>
-    <script src="main.js"></script>
-</body>
-</html>
+...

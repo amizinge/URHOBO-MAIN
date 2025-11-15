@@ -1,131 +1,64 @@
-# UAPR Website Project Outline
+# ULN Platform Outline
 
-## File Structure
+## Repo Layout
 ```
-/mnt/okcomputer/output/
-├── index.html              # Landing page with hero and overview
-├── heritage.html           # Cultural heritage explorer
-├── genealogy.html          # Family tree builder
-├── directory.html          # Professional directory
-├── main.js                 # Core JavaScript functionality
-├── resources/              # Local assets folder
-│   ├── hero-culture.jpg    # Hero background image
-│   ├── ancestry-bg.jpg     # Genealogy page background
-│   ├── heritage-1.jpg      # Cultural gallery images
-│   ├── heritage-2.jpg
-│   ├── heritage-3.jpg
-│   ├── professional-1.jpg  # Professional directory images
-│   ├── professional-2.jpg
-│   └── pattern-bg.jpg      # Cultural pattern background
-├── interaction.md          # Interaction design document
-├── design.md              # Design style guide
-└── outline.md             # This project outline
+URHOBO MAIN/
+├── index.html        # Lumina landing page + platform overview
+├── heritage.html     # Culture Engine stories + map
+├── genealogy.html    # Lineage Lab builder
+├── directory.html    # Lumina Directory (professionals)
+├── dashboard.html    # Insight dashboard + analytics
+├── main.js           # Shared interactions + animations
+├── resources/        # Image assets + patterns
+├── design.md         # Visual language guide
+├── interaction.md    # Interaction + motion narrative
+└── outline.md        # You are here
 ```
 
-## Page Breakdown
+## Page Intent
 
-### 1. Index.html - Landing Page
-**Purpose**: Welcome visitors and showcase platform overview
-**Sections**:
-- Hero area with cultural imagery and animated welcome text
-- Platform overview with interactive feature cards
-- Cultural highlights carousel
-- Community statistics visualization
-- Call-to-action for registration
+### index.html — Welcome & Story
+- Hero with typed mission statements + triple CTA.
+- Feature grid describing Lineage Studio, Diaspora Grid, Culture Engine, Impact Programs.
+- Splide carousel for “Culture Signals”.
+- Stats + CTA inviting families + labs to contribute.
 
-**Interactive Elements**:
-- Animated hero text with typewriter effects
-- Hover-transforming feature cards
-- Cultural image carousel with Ken Burns effects
-- Animated statistics counters
+### heritage.html — Culture Engine
+- Hero frames the Story Field mission.
+- Atlas (map + info cards) describing kingdoms.
+- Legacy timeline list with animated markers.
+- Filterable archive grid + contribution form.
 
-### 2. Heritage.html - Cultural Heritage Explorer
-**Purpose**: Interactive exploration of Urhobo culture and traditions
-**Sections**:
-- Interactive map of Urhobo kingdoms
-- Timeline slider for historical periods
-- Cultural gallery with filtering
-- Traditional practices documentation
-- Community contribution section
+### genealogy.html — Lineage Lab
+- CTA hero encouraging constellation building.
+- Sticky controls for creating members, importing/exporting data.
+- ECharts tree visualization space + details panel.
+- Family member grid + quick actions.
 
-**Interactive Elements**:
-- Clickable map with kingdom information
-- Timeline with period-specific content
-- Filterable cultural content grid
-- Image upload and sharing functionality
-- Comment and discussion threads
+### directory.html — Lumina Directory
+- Hero describing what the directory tracks.
+- Search + filter panel with pill toggles.
+- Cards for professionals, achievements, and mentorship badges.
+- Highlight + CTA to submit profiles.
 
-### 3. Genealogy.html - Family Tree Builder
-**Purpose**: Create and explore family ancestry connections
-**Sections**:
-- Family tree visualization interface
-- Ancestor search and discovery
-- Family profile management
-- Connection suggestions
-- Heritage documentation tools
+### dashboard.html — Insight Console
+- Stats row (storytellers, nodes, uploads, cities).
+- Engagement line/bar chart and diaspora radar chart.
+- Contributor wall + mission CTA.
 
-**Interactive Elements**:
-- Drag-and-drop family tree builder
-- Search functionality for family members
-- Relationship connection tools
-- Photo upload and tagging
-- Export and sharing options
+## Tech + Libraries
+- Tailwind CDN for utility styles + custom theme tokens.
+- Anime.js for scroll reveals and card hover micro-interactions.
+- Typed.js for hero statements.
+- Splide.js for carousels.
+- ECharts for tree, map, and dashboard visualizations.
+- Vanilla JS module (`main.js`) orchestrates observers, cards, gallery filters, etc.
 
-### 4. Directory.html - Professional Network
-**Purpose**: Connect Urhobo professionals and showcase achievements
-**Sections**:
-- Professional search and filtering
-- Achievement showcase
-- Industry statistics
-- Collaboration opportunities
-- Mentorship connections
+## Experience Notes
+- Keep nav consistent across pages with ULN logo + uppercase tagline.
+- Buttons use rounded-full shapes, Pulse backgrounds, and glow shadows.
+- Counters animate via `data-target` attributes processed in JS.
+- Contribution flows use cards with borders tinted by palette.
+- Footer mantra: “Crafted with ancestral light.”
 
-**Interactive Elements**:
-- Advanced search with multiple filters
-- Professional profile cards with hover effects
-- Achievement timeline visualization
-- Connection request system
-- Job board and collaboration board
-
-## Technical Implementation
-
-### Core Libraries Integration
-- **Anime.js**: Page transitions and micro-interactions
-- **ECharts.js**: Family trees, statistics, and data visualizations
-- **Splide.js**: Image carousels and content sliders
-- **p5.js**: Generative background patterns and cultural art
-- **Typed.js**: Animated text for quotes and welcome messages
-- **Splitting.js**: Advanced text animations
-- **Matter.js**: Physics-based interactions for family connections
-
-### Responsive Design
-- Mobile-first approach with breakpoints at 768px, 1024px, 1440px
-- Touch-friendly interactions for mobile devices
-- Optimized image loading and performance
-- Progressive enhancement for older browsers
-
-### Data Management
-- Local storage for user preferences and draft content
-- Mock data for demonstration purposes
-- Structured data for family trees and cultural content
-- Search indexing for fast content discovery
-
-## Content Strategy
-
-### Cultural Authenticity
-- Respectful representation of Urhobo traditions
-- Community-driven content approach
-- Elder consultation for cultural accuracy
-- Multi-generational accessibility
-
-### User Experience
-- Intuitive navigation with cultural breadcrumbs
-- Progressive disclosure of complex features
-- Contextual help and guidance
-- Accessibility compliance (WCAG 2.1 AA)
-
-### Performance Optimization
-- Lazy loading for images and content
-- Efficient animation performance
-- Minimal JavaScript bundle size
-- Optimized asset delivery
+This outline keeps every surface aligned with the Lumina rebrand so stakeholders can navigate, contribute, and analyze without context switching.

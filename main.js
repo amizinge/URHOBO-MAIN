@@ -1,5 +1,5 @@
-// UAPR Website Main JavaScript
-// Cultural Heritage Platform with Interactive Components
+// ULN Website Main JavaScript
+// Lumina Network Platform with Interactive Components
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -18,10 +18,10 @@ function initializeAnimations() {
     if (document.querySelector('.hero-typewriter')) {
         new Typed('.hero-typewriter', {
             strings: [
-                'Preserving Urhobo Heritage',
-                'Connecting Ancestral Lines',
-                'Celebrating Cultural Greatness',
-                'Building Community Together'
+                'Illuminating Urhobo Lineages',
+                'Designing Diaspora Futures',
+                'Activating Culture Technology',
+                'Celebrating Collective Brilliance'
             ],
             typeSpeed: 60,
             backSpeed: 30,
@@ -193,7 +193,7 @@ function initializeFamilyTree() {
                     verticalAlign: 'middle',
                     align: 'right',
                     fontSize: 12,
-                    color: '#2C2C2C'
+                    color: '#050B1A'
                 },
                 leaves: {
                     label: {
@@ -209,12 +209,12 @@ function initializeFamilyTree() {
                 animationDuration: 550,
                 animationDurationUpdate: 750,
                 itemStyle: {
-                    color: '#B85450',
-                    borderColor: '#CC8B3C',
+                    color: '#7C3AED',
+                    borderColor: '#0EA5E9',
                     borderWidth: 2
                 },
                 lineStyle: {
-                    color: '#2D5016',
+                    color: '#0F766E',
                     width: 2
                 }
             }
@@ -281,10 +281,10 @@ function initializeCulturalMap() {
     
     const mapOption = {
         title: {
-            text: 'Urhobo Kingdoms',
+            text: 'Urhobo Kingdom Atlas',
             left: 'center',
             textStyle: {
-                color: '#2C2C2C',
+                color: '#050B1A',
                 fontSize: 18,
                 fontWeight: 'bold'
             }
@@ -306,13 +306,13 @@ function initializeCulturalMap() {
                 })),
                 symbolSize: 20,
                 itemStyle: {
-                    color: '#B85450',
-                    borderColor: '#CC8B3C',
+                    color: '#7C3AED',
+                    borderColor: '#0EA5E9',
                     borderWidth: 2
                 },
                 emphasis: {
                     itemStyle: {
-                        color: '#D4AF37'
+                        color: '#FCD34D'
                     }
                 }
             }
@@ -323,12 +323,12 @@ function initializeCulturalMap() {
             zoom: 10,
             center: [6, 5.7],
             itemStyle: {
-                areaColor: '#F5F1E8',
-                borderColor: '#2D5016'
+                areaColor: '#F6F4FF',
+                borderColor: '#0F766E'
             },
             emphasis: {
                 itemStyle: {
-                    areaColor: '#CC8B3C'
+                    areaColor: '#0EA5E9'
                 }
             }
         }
@@ -343,7 +343,7 @@ function initializeTimeline() {
         { year: '1950', event: 'Cultural Revival', description: 'Post-colonial cultural renaissance' },
         { year: '1980', event: 'Educational Growth', description: 'Expansion of educational institutions' },
         { year: '2000', event: 'Digital Age', description: 'Technology adoption and globalization' },
-        { year: '2024', event: 'UAPR Launch', description: 'Digital heritage platform establishment' }
+        { year: '2024', event: 'ULN Launch', description: 'Lumina platform debuts with global storytellers' }
     ];
 
     const timelineContainer = document.getElementById('heritage-timeline');
@@ -443,15 +443,15 @@ function renderProfessionalDirectory(professionals) {
 
     container.innerHTML = professionals.map(prof => `
         <div class="professional-card bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            <div class="h-48 bg-gradient-to-br from-terracotta to-ochre"></div>
+            <div class="h-48 bg-gradient-to-br from-pulse to-aura"></div>
             <div class="p-6">
                 <div class="flex items-center mb-4">
-                    <div class="w-16 h-16 bg-terracotta rounded-full flex items-center justify-center text-white font-bold text-xl">
+                    <div class="w-16 h-16 bg-pulse rounded-full flex items-center justify-center text-white font-bold text-xl">
                         ${prof.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div class="ml-4">
-                        <h3 class="text-xl font-bold text-charcoal">${prof.name}</h3>
-                        <p class="text-ochre font-medium">${prof.profession}</p>
+                        <h3 class="text-xl font-bold text-ink">${prof.name}</h3>
+                        <p class="text-aura font-medium">${prof.profession}</p>
                     </div>
                 </div>
                 <div class="space-y-2 mb-4">
@@ -459,12 +459,12 @@ function renderProfessionalDirectory(professionals) {
                     <p class="text-gray-600"><span class="font-medium">Kingdom:</span> ${prof.kingdom}</p>
                 </div>
                 <div class="mb-4">
-                    <h4 class="font-medium text-charcoal mb-2">Achievements:</h4>
+                    <h4 class="font-medium text-ink mb-2">Achievements:</h4>
                     <ul class="text-sm text-gray-600 space-y-1">
                         ${prof.achievements.map(achievement => `<li>• ${achievement}</li>`).join('')}
                     </ul>
                 </div>
-                <button class="w-full bg-terracotta text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors duration-200">
+                <button class="w-full bg-pulse text-white py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors duration-200">
                     Connect
                 </button>
             </div>
